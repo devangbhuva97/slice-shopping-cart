@@ -1,0 +1,22 @@
+version: "3"
+services:
+  api:
+    container_name: 'slice-shopping-cart-api'
+    build: .
+    depends_on:
+      - postgres
+    environment:
+      PORT: 3000
+    command: bash -c 'while !</dev/tcp/postgres/5432; do sleep 1; done; yarn migrate; yarn start'
+    ports:
+      - "3000:3000"
+
+  postgres:
+    container_name: 'slice-shopping-cart-db'
+    image: postgres:12
+    ports:
+      - "35432:5432"
+    environment:
+      POSTGRES_USER: slice
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: slice-shopping-cart

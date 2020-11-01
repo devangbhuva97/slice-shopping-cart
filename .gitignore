@@ -1,0 +1,8 @@
+node_modules
+
+config/local.json
+
+yarn-error.log
+._.DS_Store
+
+pgdata
