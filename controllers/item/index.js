@@ -1,7 +1,11 @@
 const { validateItem } = require('./helpers');
 const DBWrapper = require('./db-wrapper');
+const logger = require('../../libs/logger');
 
-const getTotalItems = async () => {
+const getTotalItems = async (_, args, context) => {
+
+  logger.info('Item - getTotalItems', 'Request', { args, context });
+
   try {
     
     const totalItems = await DBWrapper.getItemCount();
@@ -9,13 +13,17 @@ const getTotalItems = async () => {
     return totalItems;
 
   } catch (error) {
+
+    logger.error('Item - getTotalItems', 'Error', { args, context, error });
     
     throw new Error('Something went wrong!');
 
   }
 }
 
-const addItem = async (_, args) => {
+const addItem = async (_, args, context) => {
+
+  logger.info('Item - addItem', 'Request', { args, context });
 
   const response = { success: false, message: 'Something went wrong!' };
 
@@ -37,6 +45,8 @@ const addItem = async (_, args) => {
     return { success: true, message: 'Item added successfully.', data: createdItem };
 
   } catch (error) {
+
+    logger.error('Item - addItem', 'Error', { args, context, error });
 
     return response
 

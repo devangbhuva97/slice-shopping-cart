@@ -8,13 +8,22 @@ const { v1: uuidv1 } = require("uuid");
 
 const typeDefs = require('./graphql/schema');
 const resolvers = require('./graphql/resolvers');
+const FormatError = require('./helpers/format-error');
+
+const formatError = new FormatError();
 
 const schema = makeExecutableSchema({
   typeDefs,
   resolvers
 });
 
-const server = new ApolloServer({ schema });
+const server = new ApolloServer({ 
+  schema,
+  context: ({ req }) => req,
+  formatError: (err) => {
+    return formatError.getError(err)
+  }
+});
 
 const app = express();
 

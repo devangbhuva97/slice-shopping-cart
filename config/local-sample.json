@@ -9,5 +9,8 @@
     "logging": false,
     "migrationStorage": "sequelize",
     "seederStorage": "sequelize"
+  },
+  "logger": {
+    "logToConsole": true
   }
 }

@@ -1,7 +1,10 @@
 const { validateCategory } = require('./helpers');
 const DBWrapper = require('./db-wrapper');
+const logger = require('../../libs/logger');
 
-const addCategory = async (_, args) => {
+const addCategory = async (_, args, context) => {
+
+  logger.info('Category - addCategory', 'Request', { args, context });
 
   const response = { success: false, message: 'Something went wrong!' };
 
@@ -20,6 +23,8 @@ const addCategory = async (_, args) => {
     return { success: true, message: 'Category added successfully.', data: createdCategory };
 
   } catch (error) {
+
+    logger.error('Category - addCategory', 'Error', { args, context, error });
 
     return response;
 
